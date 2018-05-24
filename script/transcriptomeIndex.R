@@ -180,6 +180,13 @@ index(transcriptomeLog,geneAge,"Rank","M.musculus",2.38,2.6,"logTrans","fileTitl
 index(transcriptomeLog,connec,"connectivity","M.musculus",36.2,39.5,"logTrans","fileTitle")
 
 ##### confidence interval ratio analysis #####
+## use the new RNAseq dataset from Naoki Irie
+transcriptomeRaw<-read.table("data/expression/data_naoki/mouse_RNAseq.txt", sep="\t", h=T)
+transcriptomeLog<-data.frame(transcriptomeRaw$Ensembl.Gene.ID,log2(transcriptomeRaw[,-1]+1))
+colnames(transcriptomeLog)<-colnames(transcriptomeRaw)
+transcriptomeSqrt<-data.frame(transcriptomeRaw$Ensembl.Gene.ID,sqrt(transcriptomeRaw[,-1]))
+colnames(transcriptomeSqrt)<-colnames(transcriptomeRaw)
+
 ##omega0     
 ciRatio(transcriptomeLog,transcriptomeSqrt,transcriptomeRaw,omega0,"omega0","M.musculus",1,1.2) 
 ## paralog number
