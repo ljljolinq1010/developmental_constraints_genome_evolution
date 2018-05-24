@@ -10,56 +10,58 @@ pleiotropyFun<- function (orgName,percent,evoData,boxplot,output) {
   if (orgName=="D.melanogaster") {
     ## data
     transcriptome<-read.table("data/expression/drosophilaExpressionLog2.txt", sep="\t", h=T)
-    transcriptome[c(2,26,27,28)]<-NULL ## delete maternal stages and adult
+    transcriptome[c(26,27,28)]<-NULL ## delete adult stages
     
     selectome<-read.table("data/selectome/melanogaster_group_omega0.txt",sep="\t",h=T)
    
     ## plot parameters
-    timePoint<-c(2:24)
-    devTime<-c("4h","6h","8h","10h","12h","14h","16h","18h","20h","22h","24h","2d","3d","4d","4.5d","5d",
+    timePoint<-c(2:25)
+    devTime<-c("2h","4h","6h","8h","10h","12h","14h","16h","18h","20h","22h","24h","2d","3d","4d","4.5d","5d",
                "5.5d","6d","6.5d","7d","8d","9d","10d") 
-    devTimeColor<-c(rep(myPalette[9],2),rep(myPalette[10],2),rep(myPalette[12],19))
-    modules = list(early = 1:2, mid = 3:4, late =5:23 )
+    devTimeColor<-c(rep(myPalette[9],3),rep(myPalette[10],3),rep(myPalette[12],18))
+    modules = list(early = 1:3, mid = 4:6, late =7:24 )
     
   } else if (orgName=="D.rerio") {
     ## data
     transcriptome<-read.table("data/expression/zfExpressionLog2.txt", sep="\t", h=T)
-    transcriptome[c(2:6,55:61)]<-NULL ## delete maternal stages and adult 
+    transcriptome[c(2,55:61)]<-NULL ## delete egg and adult stages
     
     selectome<-read.table("data/selectome/clupeocephala_selectome_omega0.txt",sep="\t",h=T)
     ## plot parameters
-    timePoint<-c(2:49)
-    devTime<-c("2.25h","","3.5h","","4.5h","","6h","","8h","","10h","","11h","",
+    timePoint<-c(3:54) ## remove egg stage and adult stage 
+    devTime<-c("0.25h","","1.25h","","2.25h","","3.5h","","4.5h","","6h","","8h","","10h","","11h","",
                "12h","","14h","","16h","","18h","","20h","","22h","","25h","","30h","","38h","","2d","","3d","","6d","","10d",
                "","18d","","30d","","45d","","65d","80d")
-    devTimeColor<-c(rep(myPalette[9],11),rep(myPalette[10],21),rep(myPalette[12],16))
-    modules = list(early = 1:11, mid = 12:32, late =33:48 )
+    devTimeColor<-c(rep("grey",4),rep(myPalette[9],11),rep(myPalette[10],21),rep(myPalette[12],16))
+    modules = list(maternal = 1:4, early = 5:15, mid = 16:36, late =37:52 )
+    
   } else if (orgName=="C.elegans") {
     ## data 
-    transcriptome<-read.table("data/expression/elegansExpressionLog2.txt", sep="\t", h=T)
-    transcriptome[c(2:4,30,31)]<-NULL ## delete maternal stages and adult
-    ## plot parameters
-    devTime<-c("1.5h","2h","2.5h","3h","3.5h","4h","5h","5.5h","6h","6.5h","7h","7.5h","8h","8.5h","9h","9.5h","10h","10.5h","11h","11.5h","12h","14h","26h","33h","40h")
-    devTimeColor<-c(rep(myPalette[9],7),rep(myPalette[10],3),rep(myPalette[12],15))
-    modules = list(early = 1:7, mid = 8:10, late =11:25 )
+    transcriptome<-read.table("data/expression/elegansExpression.txt", sep="\t", h=T)
+    transcriptome[c(30,31)]<-NULL ## delete adult stages
+    timePoint<-c(2:29) ## remove adult stage 
+    devTime<-c("0h","0.5h","1h","1.5h","2h","2.5h","3h","3.5h","4h","5h","5.5h","6h","6.5h","7h","7.5h","8h","8.5h","9h","9.5h","10h","10.5h","11h","11.5h","12h","14h","26h","33h","40h")
+    devTimeColor<-c(rep("grey",3),rep(myPalette[9],7),rep(myPalette[10],3),rep(myPalette[12],15))
+    stageNum<-28
+    modules = list(maternal=1:3,early = 4:10, mid = 11:13, late =14:28 )
     
   } else if (orgName=="M.musculus") {
     ## data
-    transcriptome<-read.table("data/expression/mouseExpression_new_Log2.txt", sep="\t", h=T)
+    transcriptome<-read.table("data/expression/data_naoki/mouse_RNAseq.txt", sep="\t", h=T)
     selectome<-read.table("data/selectome/murinae_selectome_omega0.txt",sep="\t",h=T)
     ## plot parameters
-    timePoint<-c(2:9) 
-    devTime<-c("7.5d","8.5d","10d","10.5d","12d","14d","16d","18d")
-    devTimeColor<-c(rep(myPalette[9],1),rep(myPalette[10],4),rep(myPalette[12],3))
-    modules = list(early = 1, mid = 2:5, late =6:8 )
+    timePoint<-c(2:18) 
+    devTime<-c("0.5d","1.5d","2d","3.5","7.5d","8.5d","9d","9.5d","10.5d","11.5d","12.5d","13.5d","14.5d","15.5d","16.5d","17.5d","18.5d")
+    devTimeColor<-c("grey",rep(myPalette[9],4),rep(myPalette[10],6),rep(myPalette[12],6))
+    modules = list(maternal = 1, early = 2:5, mid = 6:11, late =12:17 )
   }
   
   ## define expressed genes
-  if (orgName=="D.rerio" | orgName=="M.musculus" ) {
+  if (orgName=="D.rerio" ) {
     expressedGene<-data.frame(apply(transcriptome[-1], 2, function(x)  x > quantile(x, probs=percent,  na.rm=T)))
     
   } else {
-    expressedGene<-data.frame(apply(transcriptome[-1], 2, function(x)  x > log2(1.0001)))
+    expressedGene<-data.frame(apply(transcriptome[-1], 2, function(x)  x > 1))
     
   }
   
@@ -73,7 +75,7 @@ pleiotropyFun<- function (orgName,percent,evoData,boxplot,output) {
       freq<-c(25,35)
     } 
     if (orgName=="M.musculus") {
-      freq<-c(4,6)
+      freq<-c(9,12)
     }
     if (orgName=="D.melanogaster") {
       freq<-c(12,17)

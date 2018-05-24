@@ -18,32 +18,32 @@ ciRatio<-function(transcriptomeLog,transcriptomeSqrt,transcriptomeRaw,interestDa
   
   ## choose organism
   if (orgName=="D.melanogaster") {
-    timePoint<-c(3:25) ## remove maternal transcripts dominated stages and adult stages 
-    devTime<-c("4h","6h","8h","10h","12h","14h","16h","18h","20h","22h","24h","2d","3d","4d","4.5d","5d",
+    timePoint<-c(2:25) ## remove adult stage 
+    devTime<-c("2h","4h","6h","8h","10h","12h","14h","16h","18h","20h","22h","24h","2d","3d","4d","4.5d","5d",
                "5.5d","6d","6.5d","7d","8d","9d","10d") 
-    devTimeColor<-c(rep(myPalette[9],2),rep(myPalette[10],2),rep(myPalette[12],19))
+    devTimeColor<-c(rep(myPalette[9],3),rep(myPalette[10],3),rep(myPalette[12],18))
   }
   if (orgName=="M.musculus") {
-    timePoint<-c(2:9) 
-    devTime<-c("7.5d","8.5d","10d","10.5d","12d","14d","16d","18d")
-    devTimeColor<-c(rep(myPalette[9],1),rep(myPalette[10],4),rep(myPalette[12],3))
-
+    timePoint<-c(2:18) 
+    devTime<-c("0.5d","1.5d","2d","3.5","7.5d","8.5d","9d","9.5d","10.5d","11.5d","12.5d","13.5d","14.5d","15.5d","16.5d","17.5d","18.5d")
+    devTimeColor<-c("grey",rep(myPalette[9],4),rep(myPalette[10],6),rep(myPalette[12],6))
+    
   }
   if (orgName=="D.rerio") {
-    timePoint<-c(7:54)
-    devTime<-c("2.25h","","3.5h","","4.5h","","6h","","8h","","10h","","11h","",
+    timePoint<-c(3:54) ## remove egg stage and adult stage 
+    devTime<-c("0.25h","","1.25h","","2.25h","","3.5h","","4.5h","","6h","","8h","","10h","","11h","",
                "12h","","14h","","16h","","18h","","20h","","22h","","25h","","30h","","38h","","2d","","3d","","6d","","10d",
                "","18d","","30d","","45d","","65d","80d")
-    devTimeColor<-c(rep(myPalette[9],11),rep(myPalette[10],21),rep(myPalette[12],16))
-    stageNum<-48
-
+    devTimeColor<-c(rep("grey",4),rep(myPalette[9],11),rep(myPalette[10],21),rep(myPalette[12],16))
+    stageNum<-52
+    
   }
   
   if (orgName=="C.elegans") {
-    timePoint<-c(5:29)
-    devTime<-c("1.5h","2h","2.5h","3h","3.5h","4h","5h","5.5h","6h","6.5h","7h","7.5h","8h","8.5h","9h","9.5h","10h","10.5h","11h","11.5h","12h","14h","26h","33h","40h")
-    devTimeColor<-c(rep(myPalette[9],7),rep(myPalette[10],3),rep(myPalette[12],15))
-
+    timePoint<-c(2:29) ## remove adult stage 
+    devTime<-c("0h","0.5h","1h","1.5h","2h","2.5h","3h","3.5h","4h","5h","5.5h","6h","6.5h","7h","7.5h","8h","8.5h","9h","9.5h","10h","10.5h","11h","11.5h","12h","14h","26h","33h","40h")
+    devTimeColor<-c(rep("grey",3),rep(myPalette[9],7),rep(myPalette[10],3),rep(myPalette[12],15))
+    
   }
   ## plot parameters
   if (interestParameter=="omega0" ) {
